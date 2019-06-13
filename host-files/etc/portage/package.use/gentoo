@@ -1,0 +1,4 @@
+# required by dev-vcs/git-2.21.0::gentoo[subversion,perl]
+# required by app-portage/layman-2.4.2-r1::gentoo[git]
+# required by app-portage/layman (argument)
+>=dev-vcs/subversion-1.10.4 perl -dso
