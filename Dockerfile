@@ -16,23 +16,27 @@ COPY host-files/ /
 # configure portage
 # chown crossdev overlay
 RUN chown -R portage:portage /usr/local/portage-crossdev && \
-# install crossdev, some utilities
+	eselect locale set C.utf8
+
+# update world
+RUN emerge -uDN --quiet @world
+# install some utilities
 # install joe cause nano sucks hard
-	emerge --quiet 	app-editors/joe \
+RUN emerge --quiet 	app-editors/joe \
 			app-portage/layman \
-			sys-devel/crossdev \
 			dev-util/quilt \
 			dev-util/cmake \
 			dev-lang/swig \
 			app-misc/screen \
-			app-portage/gentoolkit \
+			app-portage/gentoolkit
+# install crossdev and embedded tools
+RUN emerge --quiet 	sys-devel/crossdev \
 			dev-embedded/u-boot-tools \
 			sys-apps/dtc \
 			sys-fs/f2fs-tools \
 			sys-fs/mtd-utils \
-			sys-fs/nilfs-utils && \
-	emerge -uDN --quiet @world && \
+			sys-fs/nilfs-utils \
+			dev-embedded/srecord
 # cleanup
-	eselect locale set C.utf8
 
 CMD /bin/bash -il
