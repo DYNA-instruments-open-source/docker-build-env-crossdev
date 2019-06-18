@@ -1,7 +1,7 @@
 FROM gentoo/portage:latest as portage
 FROM gentoo/stage3-amd64-nomultilib:latest
 
-MAINTAINER linuxer (at) quantentunnel.de
+LABEL maintainer="linuxer (at) quantentunnel.de"
 
 # copy the entire portage volume
 COPY --chown=portage:portage --from=portage /usr/portage /usr/portage
