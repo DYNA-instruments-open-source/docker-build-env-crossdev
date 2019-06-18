@@ -22,7 +22,7 @@ RUN chown -R portage:portage /usr/local/portage-crossdev && \
 RUN emerge -uDN --quiet @world
 # install some utilities
 # install joe cause nano sucks hard
-RUN emerge --quiet 	app-editors/joe \
+RUN emerge --quiet --noreplace	app-editors/joe \
 			app-portage/layman \
 			dev-util/quilt \
 			dev-util/cmake \
@@ -30,13 +30,15 @@ RUN emerge --quiet 	app-editors/joe \
 			app-misc/screen \
 			app-portage/gentoolkit
 # install crossdev and embedded tools
-RUN emerge --quiet 	sys-devel/crossdev \
+RUN ln -s -f -T cp /bin/ps2pdf && \
+    emerge --quiet --noreplace	sys-devel/crossdev \
 			dev-embedded/u-boot-tools \
 			sys-apps/dtc \
 			sys-fs/f2fs-tools \
 			sys-fs/mtd-utils \
 			sys-fs/nilfs-utils \
-			dev-embedded/srecord
-# cleanup
+			dev-embedded/srecord && \
+# cleanup \
+   rm /bin/ps2pdf
 
 CMD /bin/bash -il
