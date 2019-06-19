@@ -1,5 +1,6 @@
 FROM gentoo/portage:latest as portage
 FROM gentoo/stage3-amd64-nomultilib:latest
+ARG MERGE_JOBS
 
 LABEL maintainer="linuxer (at) quantentunnel.de"
 
@@ -19,19 +20,23 @@ RUN chown -R portage:portage /usr/local/portage-crossdev && \
 	eselect locale set C.utf8
 
 # update world
-RUN emerge -uDN --quiet @world
+RUN emerge -uDN --quiet ${MERGE_JOBS} @world
 # install some utilities
 # install joe cause nano sucks hard
-RUN emerge --quiet --noreplace	app-editors/joe \
+RUN emerge --quiet --noreplace ${MERGE_JOBS} \
+			app-editors/joe \
 			app-portage/layman \
 			dev-util/quilt \
 			dev-util/cmake \
+			dev-util/ninja \
 			dev-lang/swig \
 			app-misc/screen \
 			app-portage/gentoolkit
-# install crossdev and embedded tools
+# install crossdev, kernel and embedded tools
 RUN ln -s -f -T cp /bin/ps2pdf && \
-    emerge --quiet --noreplace	sys-devel/crossdev \
+    emerge --quiet --noreplace ${MERGE_JOBS} \
+    			sys-kernel/gentoo-sources \
+    			sys-devel/crossdev \
 			dev-embedded/u-boot-tools \
 			sys-apps/dtc \
 			sys-fs/f2fs-tools \

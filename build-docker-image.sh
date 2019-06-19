@@ -2,9 +2,10 @@
 
 docker_dir=$(dirname $(readlink -f $0))
 
+MERGE_JOBS="--jobs=16"
 REPO=dynainstrumentsoss
 IMAGE=$(basename $docker_dir)
-TAG=gentoo
+TAG=2019.06
 FULL_TAG=${REPO}/${IMAGE}:${TAG}
 DATETIME=$(date '+%Y%m%d%H%M%S')
 
@@ -25,4 +26,4 @@ EOM
 
 mkdir -p ${docker_dir}/log
 echo "Build image, write log to : ${docker_dir}/log/docker-build.${DATETIME}.log"
-exec docker build --build-arg http_proxy=$http_proxy --build-arg https_proxy=${https_proxy:-$http_proxy} --tag ${FULL_TAG} $docker_dir 2>&1 | tee ${docker_dir}/log/docker-build.${DATETIME}.log
+exec docker build --build-arg http_proxy=$http_proxy --build-arg https_proxy=${https_proxy:-$http_proxy} --build-arg MERGE_JOBS=${MERGE_JOBS} --tag ${FULL_TAG} $docker_dir 2>&1 | tee ${docker_dir}/log/docker-build.${DATETIME}.log
