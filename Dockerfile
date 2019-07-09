@@ -20,10 +20,11 @@ RUN chown -R portage:portage /usr/local/portage-crossdev && \
 	eselect locale set C.utf8
 
 # update world
-RUN emerge -uDN --quiet ${MERGE_JOBS} @world
+RUN emerge --noreplace ${MERGE_JOBS} sys-devel/distcc && \
+    emerge -uDN ${MERGE_JOBS} @world
 # install some utilities
 # install joe cause nano sucks hard
-RUN emerge --quiet --noreplace ${MERGE_JOBS} \
+RUN emerge --noreplace ${MERGE_JOBS} \
 			app-editors/joe \
 			app-portage/layman \
 			dev-util/quilt \
@@ -34,7 +35,7 @@ RUN emerge --quiet --noreplace ${MERGE_JOBS} \
 			app-portage/gentoolkit
 # install crossdev, kernel and embedded tools
 RUN ln -s -f -T cp /bin/ps2pdf && \
-    emerge --quiet --noreplace ${MERGE_JOBS} \
+    emerge --noreplace ${MERGE_JOBS} \
     			sys-kernel/gentoo-sources \
     			sys-devel/crossdev \
 			dev-embedded/u-boot-tools \
