@@ -5,7 +5,7 @@ docker_dir=$(dirname $(readlink -f $0))
 : "${MERGE_JOBS:="--jobs=16"}"
 : "${REPO:=dynainstrumentsoss}"
 : "${IMAGE:=$(basename $docker_dir)}"
-: "${TAG:=2019.06}"
+: "${TAG:=2019.11}"
 FULL_TAG=${REPO}/${IMAGE}:${TAG}
 DATETIME=$(date '+%Y%m%d%H%M%S')
 
