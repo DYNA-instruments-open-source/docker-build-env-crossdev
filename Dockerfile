@@ -38,8 +38,8 @@ RUN emerge --noreplace ${MERGE_JOBS} \
 # install crossdev, kernel and embedded tools
 RUN ln -s -f -T cp /bin/ps2pdf && \
     emerge --noreplace ${MERGE_JOBS} \
-    			sys-kernel/gentoo-sources \
-    			sys-devel/crossdev \
+    		sys-kernel/gentoo-sources \
+    		sys-devel/crossdev \
 			dev-embedded/u-boot-tools \
 			sys-apps/dtc \
 			sys-fs/f2fs-tools \
